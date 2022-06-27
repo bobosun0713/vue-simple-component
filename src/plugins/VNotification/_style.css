@@ -1,0 +1,73 @@
+@import '../main.css';
+.notification {
+  box-shadow: 1px 0 12px 0 rgb(218, 214, 214);
+  border-left: 4px solid red;
+  border-radius: 5px;
+  position: fixed;
+
+  min-width: 300px;
+  max-width: 1000px;
+  background: #fff;
+  transition: all 0.3s ease;
+}
+
+.notification-header {
+  padding: 16px 16px 0;
+  display: flex;
+  flex-basis: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification-body {
+  padding: 16px;
+}
+
+/* Cancel */
+.notification-cancel {
+  position: relative;
+  display: block;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.notification-cancel::before,
+.notification-cancel::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 2px;
+  width: 18px;
+  background: rgb(168, 168, 168);
+}
+.notification-cancel::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.notification-cancel::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Animation */
+/* Left */
+.notificationL-enter-active,
+.notificationL-leave-active {
+  opacity: 1;
+}
+.notificationL-enter-from,
+.notificationL-leave-to {
+  transform: translateX(-30px);
+  opacity: 0;
+}
+
+/* Right */
+.notificationR-enter-active,
+.notificationR-leave-active {
+  opacity: 1;
+}
+.notificationR-enter-from,
+.notificationR-leave-to {
+  transform: translateX(30px);
+  opacity: 0;
+}

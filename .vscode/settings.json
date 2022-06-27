@@ -1,0 +1,13 @@
+{
+  "editor.formatOnSave": true,
+  "editor.fontSize": 12, // 字體大小 默認14
+  "editor.lineHeight": 20, // 行高
+  "editor.formatOnPaste": false, // 複製貼上自動格式化
+  "editor.defaultFormatter": "esbenp.prettier-vscode", // 默認設置格式化工具為prettier
+  "eslint.validate": ["javascript", "vue", "typescript"], // eslint 校驗準則
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "eslint.autoFixOnSave": true
+  },
+  "vetur.validation.template": false
+}

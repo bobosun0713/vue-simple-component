@@ -48,6 +48,10 @@ const props = defineProps({
   clearTimer: {
     type: Boolean,
     default: false
+  },
+  isCommand: {
+    type: Boolean,
+    default: false
   }
 });
 const emit = defineEmits(['update:visible']);
@@ -73,6 +77,7 @@ const close = () => {
   instance.action['on-close']();
 };
 const destroyElement = () => {
+  if (!props.isCommand) return;
   instance.proxy.$el.parentNode.removeChild(instance.proxy.$el);
 };
 const backgroundColor = computed(() => props.defaultBgColor[props.type]);

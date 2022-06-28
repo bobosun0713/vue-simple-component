@@ -17,7 +17,8 @@ function message({
     warning: '#e6a23c',
     info: '#909399'
   },
-  clearTimer = false
+  clearTimer = false,
+  isCommand = true
 }) {
   instanceIdx++;
   const vnode = createComponent(MessageCM, 'v-message');
@@ -36,7 +37,8 @@ function message({
     offsetTop: vnode.offsetTop,
     zIndex: instanceIdx,
     defaultBgColor,
-    clearTimer
+    clearTimer,
+    isCommand
   });
   Object.assign(action, {
     'on-close'() {

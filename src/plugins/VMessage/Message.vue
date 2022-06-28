@@ -26,9 +26,13 @@ const props = defineProps({
     type: Number,
     default: 3000
   },
-  offset: {
+  offsetTop: {
     type: Number,
     default: 10
+  },
+  zIndex: {
+    type: Number,
+    default: 1
   },
   defaultBgColor: {
     type: Object,
@@ -47,6 +51,8 @@ const props = defineProps({
   }
 });
 const emit = defineEmits(['update:visible']);
+
+const verticalStyle = computed(() => `top:${props.offsetTop}px;z-index:${props.zIndex};`);
 
 onMounted(() => {
   nextTick(() => {
@@ -74,7 +80,7 @@ const backgroundColor = computed(() => props.defaultBgColor[props.type]);
 
 <template>
   <transition name="message" mode="out-in" @after-leave="destroyElement">
-    <div v-show="visible" class="message" :style="{ top: `${offset}px` }">
+    <div v-show="visible" class="message" :style="verticalStyle">
       <div class="message-body" :style="`background:${backgroundColor};}`">
         {{ message }}
       </div>

@@ -21,11 +21,9 @@ function message({
 }) {
   instanceIdx++;
   const vnode = createComponent(MessageCM, 'v-message');
-
   vnode.id = instanceIdx;
   vnode.offsetTop = offsetTop;
   instances.forEach(item => (vnode.offsetTop += Number(item.el.offsetHeight + eleSpacing)));
-  vnode.el.setAttribute('style', `top:${vnode.offsetTop}px;z-index:200${vnode.id}`);
   instances.push(vnode);
 
   const instance = vnode.component;
@@ -35,6 +33,8 @@ function message({
     type,
     message,
     duration,
+    offsetTop: vnode.offsetTop,
+    zIndex: instanceIdx,
     defaultBgColor,
     clearTimer
   });
@@ -49,7 +49,7 @@ function message({
 
 function closeMessage(id, offset, eleSpacing) {
   const instanceIdx = instances.findIndex(item => item.id === id);
-  if (instanceIdx < 0) return;
+  if (instanceIdx < 0 && !instances) return;
   instances[instanceIdx].component.props.visible = false;
   instances.splice(instanceIdx, 1);
 
@@ -57,7 +57,7 @@ function closeMessage(id, offset, eleSpacing) {
   instances.forEach((item, idx) => {
     verticalOffset += idx === 0 ? 0 : item.el.offsetHeight + eleSpacing;
     item.offsetTop = verticalOffset;
-    item.el.setAttribute('style', `top:${item.offsetTop}px;z-index:200${item.id}`);
+    item.component.props.offsetTop = verticalOffset;
   });
 }
 

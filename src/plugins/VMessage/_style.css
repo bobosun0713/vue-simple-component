@@ -1,0 +1,53 @@
+@import '../main.css';
+.message {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.5s ease;
+}
+
+.message-body {
+  overflow: hidden;
+  border-radius: 5px;
+  padding: 8px 24px 8px 12px;
+  color: #fff;
+}
+
+.message-cancel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25px;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.message-cancel::before,
+.message-cancel::after {
+  content: '';
+  position: absolute;
+  height: 3px;
+  width: 12px;
+  background: #fff;
+}
+.message-cancel::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.message-cancel::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Animation */
+.message-enter-active,
+.message-leave-active {
+  opacity: 1;
+}
+
+.message-enter-from,
+.message-leave-to {
+  transform: translate(-50%, -30px);
+  opacity: 0;
+}

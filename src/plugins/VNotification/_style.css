@@ -11,6 +11,13 @@
   transition: all 0.3s ease;
 }
 
+.notification.right {
+  right: 10px;
+}
+.notification.left {
+  left: 10px;
+}
+
 .notification-header {
   padding: 16px 16px 0;
   display: flex;

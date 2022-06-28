@@ -13,7 +13,6 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-
   title: {
     type: String,
     default: 'Title'
@@ -22,20 +21,36 @@ const props = defineProps({
     type: String,
     default: 'demo'
   },
-  position: {
-    type: String,
-    default: 'left'
-  },
   duration: {
     type: Number,
     default: 3000
   },
-
+  offsetTop: {
+    type: Number,
+    default: 30
+  },
+  position: {
+    type: String,
+    default: 'left'
+  },
+  zIndex: {
+    type: Number,
+    default: 1
+  },
+  width: {
+    type: Number,
+    default: 400
+  },
   clearTimer: {
+    type: Boolean,
+    default: false
+  },
+  isCommand: {
     type: Boolean,
     default: false
   }
 });
+const emit = defineEmits(['update:visible']);
 
 onMounted(() => {
   nextTick(() => {
@@ -44,19 +59,14 @@ onMounted(() => {
   });
 });
 
-// Position
-const selectAnimation = computed(() => {
-  switch (props.position) {
-    case 'left':
-    case 'bottomleft':
-      return 'notificationL';
-    case 'right':
-    case 'bottomright':
-      return 'notificationR';
-    default:
-      return 'bottomleft';
-  }
-});
+const horizontalDirectionClass = computed(() => (/right/.test(props.position) ? 'right' : 'left'));
+const verticalDirection = computed(() => (/bottom/.test(props.position) ? 'bottom' : 'top'));
+const verticalStyle = computed(
+  () => `${verticalDirection.value}:${props.offsetTop}px;z-index:${props.zIndex};width:${props.width}px`
+);
+const selectAnimation = computed(() =>
+  horizontalDirectionClass.value.includes('right') ? 'notificationR' : 'notificationL'
+);
 
 let timer;
 const setTimer = () => {
@@ -66,17 +76,19 @@ const setTimer = () => {
 };
 const close = () => {
   clearInterval(timer);
+  emit('update:visible', false);
   instance.action['on-close']();
 };
 
 const destroyElement = () => {
+  if (!props.isCommand) return;
   instance.proxy.$el.parentNode.removeChild(instance.proxy.$el);
 };
 </script>
 
 <template>
   <transition :name="selectAnimation" mode="out-in" @after-leave="destroyElement">
-    <div v-show="visible" class="notification">
+    <div v-show="visible" class="notification" :class="horizontalDirectionClass" :style="verticalStyle">
       <div class="notification-header">
         <slot name="notification-header__title">
           <div class="notification-header__title">{{ props.title }}</div>

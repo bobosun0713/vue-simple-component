@@ -21,20 +21,22 @@ function message({
   isCommand = true
 }) {
   instanceIdx++;
-  const vnode = createComponent(MessageCM, 'v-message');
-  vnode.id = instanceIdx;
-  vnode.offsetTop = offsetTop;
-  instances.forEach(item => (vnode.offsetTop += Number(item.el.offsetHeight + eleSpacing)));
-  instances.push(vnode);
+  const { vNode, component } = createComponent(MessageCM);
+  document.body.appendChild(component);
 
-  const instance = vnode.component;
+  vNode.id = instanceIdx;
+  vNode.offsetTop = offsetTop;
+  instances.forEach(item => (vNode.offsetTop += Number(item.el.offsetHeight + eleSpacing)));
+  instances.push(vNode);
+
+  const instance = vNode.component;
   const { props, action } = instance;
   Object.assign(props, {
     visible,
     type,
     message,
     duration,
-    offsetTop: vnode.offsetTop,
+    offsetTop: vNode.offsetTop,
     zIndex: instanceIdx,
     defaultBgColor,
     clearTimer,
@@ -42,11 +44,9 @@ function message({
   });
   Object.assign(action, {
     'on-close'() {
-      closeMessage(vnode.id, offsetTop, eleSpacing);
+      closeMessage(vNode.id, offsetTop, eleSpacing);
     }
   });
-
-  return vnode;
 }
 
 function closeMessage(id, offset, eleSpacing) {

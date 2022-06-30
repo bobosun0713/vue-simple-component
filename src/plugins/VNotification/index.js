@@ -22,22 +22,23 @@ function notification({
   isCommand = true
 }) {
   instanceIdx++;
-  const vnode = createComponent(NotificationCM);
+  const { vNode, component } = createComponent(NotificationCM);
+  document.body.appendChild(component);
 
-  vnode.id = 'v-notification' + instanceIdx;
-  vnode.offsetTop = offsetTop;
+  vNode.id = 'v-notification' + instanceIdx;
+  vNode.offsetTop = offsetTop;
 
-  instances[position].forEach(item => (vnode.offsetTop += Number(item.el.offsetHeight + eleSpacing)));
-  instances[position].push(vnode);
+  instances[position].forEach(item => (vNode.offsetTop += Number(item.el.offsetHeight + eleSpacing)));
+  instances[position].push(vNode);
 
-  const instance = vnode.component;
+  const instance = vNode.component;
   const { props, action } = instance;
   Object.assign(props, {
     visible,
     title,
     message,
     duration,
-    offsetTop: vnode.offsetTop,
+    offsetTop: vNode.offsetTop,
     position,
     zIndex: instanceIdx,
     width,
@@ -46,7 +47,7 @@ function notification({
   });
   Object.assign(action, {
     'on-close'() {
-      closeMessage(vnode.id, offsetTop, position, eleSpacing);
+      closeMessage(vNode.id, offsetTop, position, eleSpacing);
     }
   });
 }

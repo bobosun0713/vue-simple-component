@@ -36,7 +36,6 @@ const isLoading = ref(false);
 watch(
   () => props.visible,
   val => {
-    console.log('cm 觸發');
     if (val) isLoading.value = true;
     else isLoading.value = false;
     if (props.isTimer) setTimer();

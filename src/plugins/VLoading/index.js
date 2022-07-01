@@ -11,10 +11,25 @@ export const defaultProps = {
   fullScreen: false
 };
 
-function loading(props) {
-  const options = merge({}, defaultProps, props);
-  const instance = createComponent(LoadingCM, options);
-  instance.component.props.visible = true;
+function loading(option) {
+  const options = merge({}, defaultProps, option);
+  const { vNode, component } = createComponent(LoadingCM, options);
+  const { props } = vNode.component;
+
+  function show() {
+    document.body.appendChild(component);
+    props.visible = true;
+  }
+
+  function close() {
+    if (!props.visible) return;
+    props.visible = false;
+  }
+
+  return {
+    show,
+    close
+  };
 }
 
 export { loading, LoadingDirective };

@@ -29,8 +29,7 @@ function message({
   instances.forEach(item => (vNode.offsetTop += Number(item.el.offsetHeight + eleSpacing)));
   instances.push(vNode);
 
-  const instance = vNode.component;
-  const { props, action } = instance;
+  const { props, action } = vNode.component;
   Object.assign(props, {
     visible,
     type,

@@ -1,0 +1,88 @@
+@import '../main.css';
+.v-modal {
+  position: fixed;
+  z-index: 1500;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(134, 131, 131, 0.5);
+  transition: all 0.3s;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.v-modal-content {
+  background-color: #fff;
+  box-shadow: 0 2px 16px rgb(0 0 0 / 16%);
+  border: 1px solid #3a8fb7;
+  border-radius: 6px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.v-modal-cancel {
+  background-color: transparent;
+  border: 0;
+  font-size: 0;
+  cursor: pointer;
+}
+
+.v-modal-header {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom: 1px solid #eaeaea;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.v-modal-body {
+  flex: 1;
+}
+.v-modal-footer {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  background-color: #f6f6f6;
+}
+
+.v-modal-header,
+.v-modal-body,
+.v-modal-footer {
+  padding: 16px 24px;
+}
+
+/* Animation */
+.modal-enter-active,
+.modal-leave-active {
+  opacity: 1;
+}
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+/* Size */
+.modal-xl {
+  width: 1200px;
+}
+.modal-lg {
+  width: 1000px;
+}
+.modal-md {
+  width: 600px;
+}
+.modal-sm {
+  width: 400px;
+}

@@ -3,8 +3,9 @@ import { NotificationCM, notification } from './VNotification/index.js';
 import { CollapseCM } from './VCollapse/index.js';
 import { loading } from './VLoading/index.js';
 import { ModalCM, modal } from './VModal/index.js';
+import { VTableCM, VTableColumnCM, VTableOldCM } from './VTable/index.js';
 
-const components = [MessageCM, NotificationCM, CollapseCM, ModalCM];
+const components = [MessageCM, NotificationCM, CollapseCM, ModalCM, VTableCM, VTableColumnCM, VTableOldCM];
 
 export default {
   install(app) {

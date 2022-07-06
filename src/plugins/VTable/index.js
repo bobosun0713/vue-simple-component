@@ -1,5 +1,5 @@
-import VTableCM from './VTable.vue';
-import VTableColumnCM from './VTableColumn.vue';
+import VTableCM from './VTable.js';
+import VTableColumnCM from './VTableColumn.js';
 
 //TODO 舊版本
 import VTableOldCM from './VTableOld.vue';

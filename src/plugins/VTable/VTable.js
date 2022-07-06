@@ -1,4 +1,3 @@
-<script>
 import { h } from 'vue';
 export default {
   name: 'VTable',
@@ -20,9 +19,11 @@ export default {
     }, []);
 
     const tbodyColumn = () => props.data.map(data => h('tr', calculateColumn('td', data)));
+
     const calculateColumn = (tag = 'td', data) =>
       initData.map((item, idx) => {
         if (tag === 'td' && data) {
+          // 把每筆default的值重新設定，並回傳新的 default實例來做渲染
           const renderSlot = slots.default()[idx];
           Object.assign(renderSlot.props, { row: data[item.prop], data });
           return h(tag, { style: `text-align:${slotAlign(slots.default()[idx])}` }, renderSlot);
@@ -41,11 +42,12 @@ export default {
         {
           class: 'table'
         },
-        h('thead', { class: 'thead' }, h('tr', calculateColumn('th'))),
-        h('tbody', tbodyColumn())
+        [
+          //* thead
+          h('thead', { class: 'thead' }, h('tr', calculateColumn('th'))),
+          //* tbody
+          h('tbody', tbodyColumn())
+        ]
       );
   }
 };
-</script>
-
-<style lang="scss"></style>

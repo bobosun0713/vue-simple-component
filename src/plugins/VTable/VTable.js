@@ -1,39 +1,31 @@
 import { h } from 'vue';
 export default {
   name: 'VTable',
-  props: {
-    data: {
-      type: Array,
-      default() {
-        return [];
-      }
-    }
-  },
+  props: { data: Array },
   setup(props, { slots }) {
-    const slotWidth = slot => slots && slot.props.width;
+    const slotWidth = slot => slots && slot.props?.width;
     const slotAlign = slot => (slots && slot.props?.align) || 'center';
 
     const initData = slots.default().reduce((acc, crr) => {
-      acc.push({ title: crr.props.label, prop: crr.props.prop });
+      if (typeof crr.type !== 'symbol') {
+        acc.push({ vnode: crr, props: { title: crr.props.label, prop: crr.props.prop } });
+        return acc;
+      }
       return acc;
     }, []);
 
     const tbodyColumn = () => props.data.map(data => h('tr', calculateColumn('td', data)));
 
     const calculateColumn = (tag = 'td', data) =>
-      initData.map((item, idx) => {
+      initData.map(item => {
         if (tag === 'td' && data) {
-          // 把每筆default的值重新設定，並回傳新的 default實例來做渲染
-          const renderSlot = slots.default()[idx];
-          Object.assign(renderSlot.props, { row: data[item.prop], data });
-          return h(tag, { style: `text-align:${slotAlign(slots.default()[idx])}` }, renderSlot);
+          // 把每筆default的值重新設定，並回傳新的 default props 來做渲染
+          // 每筆row的column都包含，該筆row所有的資料
+          Object.assign(item.vnode.props, { row: data[item.props.prop], data });
+          return h(tag, { style: `text-align:${slotAlign(item)}` }, item.vnode);
         }
 
-        return h(
-          tag,
-          { style: `width:${slotWidth(slots.default()[idx])}px;text-align:${slotAlign(slots.default()[idx])}` },
-          item.title
-        );
+        return h(tag, { style: `width:${slotWidth(item)}px;text-align:${slotAlign(item)}` }, item.props.title);
       });
 
     return () =>
